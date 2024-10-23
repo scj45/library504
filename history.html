@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+
+    <div style="overflow-x:auto;">
+        <table>
+            <tr>
+                <th>Book ID</th>
+                <th>Reader ID</th>
+                <th>Action</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+            {% for entry in history %}
+                <tr>
+                    <td>{{ entry["bookid"] }}</td>
+                    <td>{{ entry["action"] }}</td>
+                    <td>{{ entry["date"] }}</td>
+                    <td>{{ entry["time"] }}</td>
+                </tr>
+            {% end for %}
+        </table>
+    </div>
+
+{% endblock %}

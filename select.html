@@ -1,0 +1,61 @@
+{% extends "index.html" %}
+
+<script>
+    function markRead() { // save checkbox responses
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        let marked = [];
+
+        checkboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                marked.push(checkbox.value);
+            }
+        });
+
+        localStorage.setItem('markRead', JSON.stringify(markRead));
+    }
+    
+    document.getElementById('read').addEventListener('click', function (event) {
+        event.preventDefault();
+        markRead();
+    });
+</script>
+
+{% block title %}
+    Select
+{% endblock %}
+
+{% block main %}
+
+    <form action="/select" id="select" method="post"></form>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Publishing Year</th>
+                <th>Edition</th>
+                <th>No. of Copies</th> 
+                <th>Genre</th>
+                <th>Topics</th>
+                <th>Read?</th>
+            </tr>
+            {% for row in selected %}   
+                <tr>
+                    <td>{{ row["title"] }}</td>
+                    <td>{{ row["authorfirstname"] }}{{ row["authorlastname"] }}</td>                
+                    <td>{{ row["year"] }}</td>
+                    <td>{{ row["edition"] }}</td>
+                    <td>{{ row["copies"] }}</td>
+                    <td>{{ row["genre"] }}</td>
+                    <td>
+                        <ul>
+                            <li>{{ row["topicA"] }}</li>
+                            <li>{{ row["topicB"] }}</li>
+                            <li>{{ row["topicC"] }}</li>
+                        </ul>
+                    </td>
+                    <td><input type="checkbox" id="read" class="markRead">READ</input></td>
+                </tr>
+            {% end for %}
+        </table>
+    </form>
+{% endblock %}

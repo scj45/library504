@@ -1,0 +1,34 @@
+create table books (
+    id integer not null auto_increment,
+    title text not null,
+    author text,
+    year year,
+    edition integer,
+    copies integer,
+    genre TEXT,
+    topicsA TEXT,
+    topicsB TEXT,
+    topicsC TEXT,
+    status BOOL,
+    unique(id),
+    primary key (id)
+);
+
+create table reader (
+    id INTEGER NOT null auto_increment,
+    username text not null,
+    firstname text not null,
+    lastname text not null,
+    hash TEXT NOT NULL,
+    primary key (id),
+    unique(id)
+);
+
+create table history (
+    bookid integer not null,
+    readerid integer not null,
+    action TEXT,
+    timestamp timestamp,
+    foreign key (bookid) references books(id),
+    foreign key (readerid) references reader(id) 
+);

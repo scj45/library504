@@ -1,0 +1,16 @@
+@app.route("/select", methods=["GET", "POST"])
+@login_required
+def select():
+    selected = db.execute("SELECT * FROM books WHERE id = ? ORDER BY author", ) 
+    return render_template("select.html", selected=selected)
+def mark():
+    selectedBook = db.execute("SELECT * FROM books WHERE id = ?", selected["id"])
+    if request.form.get("markRead") == "checked":
+        action = str("read")
+    else:
+       action = str(" ") 
+
+    db.execute("INSERT INTO history (bookid, readerid, action) VALUES (?, ?, ?)", selectedBook["bookid"], session["id"], action)
+
+
+ <td id="{{book["id"]}}">{{ book["status"] }}</td>

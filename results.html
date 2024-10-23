@@ -1,0 +1,38 @@
+{% extends "index.html" %}
+
+{% block title %}
+    Search Results
+{% endblock %}
+
+{% block main %}
+    <table id="results" method="post">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Publishing Year</th>
+            <th>Edition</th>
+            <th>No. of Copies</th> 
+            <th>Genre</th>
+            <th>Topics</th>
+            <th>Read?</th>
+        </tr>
+        {% for result in results %}   
+            <tr>
+                <td>{{ book["title"] }}</td>
+                <td>{{ book["authorfirstname"] }}{{ book["authorlastname"] }}</td>
+                <td>{{ book["year"] }}</td>
+                <td>{{ book["edition"] }}</td>
+                <td>{{ book["copies"] }}</td>
+                <td>{{ book["genre"] }}</td>
+                <td>
+                    <ul>
+                        <li>{{ book["topicA"] }}</li>
+                        <li>{{ book["topicB"] }}</li>
+                        <li>{{ book["topicC"] }}</li>
+                    </ul>
+                </td>            
+            </tr>
+        {% end for %}
+    </table>
+{% endblock %}
+
