@@ -1,15 +1,12 @@
 import requests
 from functools import wraps
-import os
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
-from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
-
-import datetime
-
 import mysql.connector
+
+DEBUG = True
 
 db = mysql.connector.connect( 
     host = "localhost", 
@@ -55,27 +52,6 @@ def login_required(f):
         return f(*args, **kwargs)
 
     return decorated_function
-
-
-def lookup(keyword):
-    """Look up book for keyword."""
-    url = f"https://library504.io/quote?keyword={keyword.upper()}"
-    try:
-        response = requests.get(url)
-        response.raise_for_status()  # Raise an error for HTTP error responses
-        book_data = response.json()
-        return {
-            "title": book_data["bookTitle"],
-            "author": book_data["bookAuthor"],
-            "year": book_data["publishYear"],
-            "edition": book_data["printEdition"],
-            "copies": book_data["numCopies"]
-        }
-    except requests.RequestException as e:
-        print(f"Request error: {e}")
-    except (KeyError, ValueError) as e:
-        print(f"Data parsing error: {e}")
-    return None
 
 # Configure application
 app = Flask(__name__)
